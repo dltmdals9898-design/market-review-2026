@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>2026 한국 증시 리뷰</title>
+    <title>2026 글로벌 증시 리뷰</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
     <style>
@@ -12,12 +12,23 @@
             background-color: #ffffff; 
             margin: 0;
             padding: 0;
-            overflow: hidden; 
+            overflow: hidden; /* 전체 스크롤바 숨김 */
         }
         
-        .slide-container {
+        /* 2페이지를 가로로 이어붙이는 슬라이더 래퍼 */
+        .slider-wrapper {
+            display: flex;
+            width: 200vw; /* 100vw * 2페이지 */
+            height: 100vh;
+            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* 개별 페이지 세팅 */
+        .slide-page {
             width: 100vw;
             height: 100vh;
+            position: relative; /* 챗봇을 각 페이지 안에 가두기 위함 */
+            overflow: hidden;
         }
 
         .fade-in-up {
@@ -33,13 +44,9 @@
         .delay-500 { animation-delay: 0.5s; }
 
         @keyframes fadeInUp {
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            to { opacity: 1; transform: translateY(0); }
         }
 
-        /* Chart Animation */
         .draw-line {
             stroke-dasharray: 1000;
             stroke-dashoffset: 1000;
@@ -60,212 +67,343 @@
         }
     </style>
 </head>
-<body class="min-h-screen">
+<body>
 
-    <div class="slide-container bg-white relative flex flex-col justify-between">
-        
-        <div class="absolute top-0 right-0 w-[500px] h-[500px] bg-blue-500 rounded-full mix-blend-multiply filter blur-3xl opacity-10 translate-x-1/2 -translate-y-1/2"></div>
-        <div class="absolute bottom-0 left-0 w-[400px] h-[400px] bg-indigo-500 rounded-full mix-blend-multiply filter blur-3xl opacity-10 -translate-x-1/2 translate-y-1/2"></div>
+    <div id="main-slider" class="slider-wrapper">
 
-        <header class="pt-8 px-16 pb-4 border-b border-gray-100 relative z-10 fade-in-up">
-            <div class="flex items-center justify-between">
-                <div>
-                    <p class="text-blue-600 font-bold tracking-wider text-sm mb-1">2026 MARKET REVIEW</p>
-                    <h1 class="text-4xl md:text-5xl font-black text-gray-900 tracking-tight">
-                        2026년 한국 주식시장 주요 변화
-                    </h1>
-                </div>
-            </div>
-        </header>
-
-        <main class="flex-1 px-16 py-6 flex flex-col md:flex-row gap-12 items-center relative z-10 overflow-hidden">
+        <div class="slide-page bg-white flex flex-col justify-between">
             
-            <div class="w-full md:w-5/12 flex flex-col justify-center gap-5">
-                
-                <div class="fade-in-up delay-100 bg-blue-50 rounded-xl p-5 border-l-4 border-blue-600 shadow-sm">
-                    <h3 class="text-xl font-bold text-gray-800 mb-1 flex items-center gap-2">
-                        <span class="text-2xl">📈</span> '밸류업 2.0' 본격화
-                    </h3>
-                    <p class="text-gray-600 leading-relaxed text-sm">
-                        기업 지배구조 개선 및 주주환원율이 사상 최고치를 경신했습니다. PBR 1배 미만 기업들의 자사주 소각이 급증하며 코리아 디스카운트 해소 국면에 진입했습니다.
-                    </p>
-                </div>
+            <div class="absolute top-0 right-0 w-[500px] h-[500px] bg-blue-500 rounded-full mix-blend-multiply filter blur-3xl opacity-10 translate-x-1/2 -translate-y-1/2 z-0"></div>
+            <div class="absolute bottom-0 left-0 w-[400px] h-[400px] bg-indigo-500 rounded-full mix-blend-multiply filter blur-3xl opacity-10 -translate-x-1/2 translate-y-1/2 z-0"></div>
 
-                <div class="fade-in-up delay-200 bg-indigo-50 rounded-xl p-5 border-l-4 border-indigo-600 shadow-sm">
-                    <h3 class="text-xl font-bold text-gray-800 mb-1 flex items-center gap-2">
-                        <span class="text-2xl">🧠</span> AI·반도체 슈퍼사이클
-                    </h3>
-                    <p class="text-gray-600 leading-relaxed text-sm">
-                        HBM4 양산 본격화 및 온디바이스 AI 시장 확대로 국내 반도체 투톱의 어닝 서프라이즈가 지속되며 지수 상승을 견인했습니다.
-                    </p>
-                </div>
-
-                <div class="fade-in-up delay-300 bg-purple-50 rounded-xl p-5 border-l-4 border-purple-600 shadow-sm">
-                    <h3 class="text-xl font-bold text-gray-800 mb-1 flex items-center gap-2">
-                        <span class="text-2xl">💸</span> 금리 인하와 유동성
-                    </h3>
-                    <p class="text-gray-600 leading-relaxed text-sm">
-                        글로벌 금리 인하 사이클이 안착함에 따라 외국인 자금이 대거 유입되었고, 개인 투자자들의 예탁금 역시 크게 증가하여 코스피 3,100pt 돌파의 원동력이 되었습니다.
-                    </p>
-                </div>
-
-            </div>
-
-            <div class="w-full md:w-7/12 flex flex-col items-center justify-center fade-in-up delay-400 h-full max-h-[85vh]">
-                <div class="w-full bg-white border border-gray-200 rounded-2xl shadow-md p-6 relative">
-                    <h4 class="text-center font-bold text-gray-700 mb-6">2026년 KOSPI 지수 추이 (실제 YTD 데이터)</h4>
-                    
-                    <div class="w-full h-64 md:h-80 relative">
-                        <svg viewBox="0 0 520 220" class="w-full h-full overflow-visible">
-                            <line x1="0" y1="180" x2="500" y2="180" stroke="#e5e7eb" stroke-width="1" />
-                            <line x1="0" y1="140" x2="500" y2="140" stroke="#e5e7eb" stroke-width="1" />
-                            <line x1="0" y1="100" x2="500" y2="100" stroke="#e5e7eb" stroke-width="1" />
-                            <line x1="0" y1="60" x2="500" y2="60" stroke="#e5e7eb" stroke-width="1" />
-                            <line x1="0" y1="20" x2="500" y2="20" stroke="#e5e7eb" stroke-width="1" />
-                            
-                            <text x="-15" y="184" text-anchor="end" class="text-[11px] font-medium fill-gray-400">4,000</text>
-                            <text x="-15" y="144" text-anchor="end" class="text-[11px] font-medium fill-gray-400">5,000</text>
-                            <text x="-15" y="104" text-anchor="end" class="text-[11px] font-medium fill-gray-400">6,000</text>
-                            <text x="-15" y="64" text-anchor="end" class="text-[11px] font-medium fill-gray-400">7,000</text>
-                            <text x="-15" y="24" text-anchor="end" class="text-[11px] font-medium fill-gray-400">8,000</text>
-
-                            <path d="M 0 168 C 60 140, 65 101, 125 101 C 185 101, 190 114, 250 114 C 310 114, 315 74, 375 74 C 410 74, 435 21, 475 21 C 485 21, 495 52, 500 52" 
-                                  fill="none" stroke="url(#gradient)" stroke-width="4" stroke-linecap="round" class="draw-line" />
-                            
-                            <defs>
-                                <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="0%">
-                                    <stop offset="0%" stop-color="#3b82f6" />
-                                    <stop offset="100%" stop-color="#4f46e5" />
-                                </linearGradient>
-                            </defs>
-
-                            <g class="fade-in" style="animation-delay: 1.0s; opacity: 0;">
-                                <circle cx="0" cy="168" r="5" fill="#3b82f6" stroke="#fff" stroke-width="2"/>
-                                <rect x="8" y="142" width="100" height="20" rx="4" fill="#ffffff" fill-opacity="0.85"/>
-                                <text x="12" y="156" text-anchor="start" class="text-xs md:text-sm font-bold fill-blue-700">1월 초 (4,310)</text>
-                            </g>
-
-                            <g class="fade-in" style="animation-delay: 1.5s; opacity: 0;">
-                                <circle cx="250" cy="114" r="5" fill="#4f46e5" stroke="#fff" stroke-width="2"/>
-                                <rect x="200" y="74" width="100" height="20" rx="4" fill="#ffffff" fill-opacity="0.85"/>
-                                <text x="250" y="88" text-anchor="middle" class="text-xs md:text-sm font-bold fill-indigo-700">3월 말 (5,640)</text>
-                            </g>
-                            
-                            <g class="fade-in" style="animation-delay: 2.0s; opacity: 0;">
-                                <circle cx="475" cy="21" r="5" fill="#ef4444" stroke="#fff" stroke-width="2"/>
-                                <rect x="360" y="-8" width="130" height="22" rx="4" fill="#ffffff" fill-opacity="0.85"/>
-                                <text x="490" y="8" text-anchor="end" class="text-xs md:text-sm font-black fill-red-500">5/14 최고점 (7,981)</text>
-                            </g>
-
-                            <g class="fade-in" style="animation-delay: 2.5s; opacity: 0;">
-                                <circle cx="500" cy="52" r="6" fill="#4f46e5" stroke="#fff" stroke-width="2"/>
-                                <rect x="410" y="24" width="105" height="20" rx="4" fill="#ffffff" fill-opacity="0.85"/>
-                                <text x="512" y="38" text-anchor="end" class="text-xs md:text-sm font-black fill-indigo-700">현재 (7,208.95)</text>
-                            </g>
-
-                            <text x="0" y="210" text-anchor="middle" class="text-xs font-semibold fill-gray-500">1월</text>
-                            <text x="125" y="210" text-anchor="middle" class="text-xs font-semibold fill-gray-500">2월</text>
-                            <text x="250" y="210" text-anchor="middle" class="text-xs font-semibold fill-gray-500">3월</text>
-                            <text x="375" y="210" text-anchor="middle" class="text-xs font-semibold fill-gray-500">4월</text>
-                            <text x="500" y="210" text-anchor="middle" class="text-xs font-semibold fill-gray-500">5월 현재</text>
-                        </svg>
+            <header class="pt-8 px-16 pb-4 border-b border-gray-100 relative z-10 fade-in-up">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-blue-600 font-bold tracking-wider text-sm mb-1">2026 MARKET REVIEW</p>
+                        <h1 class="text-4xl md:text-5xl font-black text-gray-900 tracking-tight">
+                            2026년 한국 주식시장 주요 변화
+                        </h1>
                     </div>
+                    <button onclick="moveSlide('us')" class="px-5 py-2.5 bg-gray-900 text-white rounded-lg text-sm font-bold hover:bg-gray-700 transition-colors shadow-md flex items-center gap-2">
+                        미국 증시 보기 <span>▶</span>
+                    </button>
+                </div>
+            </header>
 
-                    <div class="mt-8 grid grid-cols-3 gap-4 text-center border-t border-gray-100 pt-4">
-                        <div>
-                            <p class="text-xs text-gray-500 mb-1">시가총액</p>
-                            <p class="text-lg font-bold text-gray-800">5,800조<span class="text-xs text-red-500 ml-1">▲</span></p>
+            <main class="flex-1 px-16 py-6 flex flex-col md:flex-row gap-12 items-center relative z-10 overflow-hidden">
+                <div class="w-full md:w-5/12 flex flex-col justify-center gap-5">
+                    <div class="fade-in-up delay-100 bg-blue-50 rounded-xl p-5 border-l-4 border-blue-600 shadow-sm">
+                        <h3 class="text-xl font-bold text-gray-800 mb-1 flex items-center gap-2"><span class="text-2xl">📈</span> '밸류업 2.0' 본격화</h3>
+                        <p class="text-gray-600 leading-relaxed text-sm">기업 지배구조 개선 및 주주환원율이 사상 최고치를 경신했습니다. PBR 1배 미만 기업들의 자사주 소각이 급증하며 코리아 디스카운트 해소 국면에 진입했습니다.</p>
+                    </div>
+                    <div class="fade-in-up delay-200 bg-indigo-50 rounded-xl p-5 border-l-4 border-indigo-600 shadow-sm">
+                        <h3 class="text-xl font-bold text-gray-800 mb-1 flex items-center gap-2"><span class="text-2xl">🧠</span> AI·반도체 슈퍼사이클</h3>
+                        <p class="text-gray-600 leading-relaxed text-sm">HBM4 양산 본격화 및 온디바이스 AI 시장 확대로 국내 반도체 투톱의 어닝 서프라이즈가 지속되며 지수 상승을 견인했습니다.</p>
+                    </div>
+                    <div class="fade-in-up delay-300 bg-purple-50 rounded-xl p-5 border-l-4 border-purple-600 shadow-sm">
+                        <h3 class="text-xl font-bold text-gray-800 mb-1 flex items-center gap-2"><span class="text-2xl">💸</span> 금리 인하와 유동성</h3>
+                        <p class="text-gray-600 leading-relaxed text-sm">글로벌 금리 인하 사이클이 안착함에 따라 외국인 자금이 대거 유입되었고, 개인 투자자들의 예탁금 역시 크게 증가하여 코스피 3,100pt 돌파의 원동력이 되었습니다.</p>
+                    </div>
+                </div>
+
+                <div class="w-full md:w-7/12 flex flex-col items-center justify-center fade-in-up delay-400 h-full max-h-[85vh]">
+                    <div class="w-full bg-white border border-gray-200 rounded-2xl shadow-md p-6 relative">
+                        <h4 class="text-center font-bold text-gray-700 mb-6">2026년 KOSPI 지수 추이 (실제 YTD 데이터)</h4>
+                        <div class="w-full h-64 md:h-80 relative">
+                            <svg viewBox="0 0 520 220" class="w-full h-full overflow-visible">
+                                <line x1="0" y1="180" x2="500" y2="180" stroke="#e5e7eb" stroke-width="1" />
+                                <line x1="0" y1="140" x2="500" y2="140" stroke="#e5e7eb" stroke-width="1" />
+                                <line x1="0" y1="100" x2="500" y2="100" stroke="#e5e7eb" stroke-width="1" />
+                                <line x1="0" y1="60" x2="500" y2="60" stroke="#e5e7eb" stroke-width="1" />
+                                <line x1="0" y1="20" x2="500" y2="20" stroke="#e5e7eb" stroke-width="1" />
+                                
+                                <text x="-15" y="184" text-anchor="end" class="text-[11px] font-medium fill-gray-400">4,000</text>
+                                <text x="-15" y="144" text-anchor="end" class="text-[11px] font-medium fill-gray-400">5,000</text>
+                                <text x="-15" y="104" text-anchor="end" class="text-[11px] font-medium fill-gray-400">6,000</text>
+                                <text x="-15" y="64" text-anchor="end" class="text-[11px] font-medium fill-gray-400">7,000</text>
+                                <text x="-15" y="24" text-anchor="end" class="text-[11px] font-medium fill-gray-400">8,000</text>
+
+                                <path d="M 0 168 C 60 140, 65 101, 125 101 C 185 101, 190 114, 250 114 C 310 114, 315 74, 375 74 C 410 74, 435 21, 475 21 C 485 21, 495 52, 500 52" 
+                                      fill="none" stroke="url(#gradient-kr)" stroke-width="4" stroke-linecap="round" class="draw-line" />
+                                <defs>
+                                    <linearGradient id="gradient-kr" x1="0%" y1="0%" x2="100%" y2="0%">
+                                        <stop offset="0%" stop-color="#3b82f6" />
+                                        <stop offset="100%" stop-color="#4f46e5" />
+                                    </linearGradient>
+                                </defs>
+
+                                <g class="fade-in" style="animation-delay: 1.0s; opacity: 0;">
+                                    <circle cx="0" cy="168" r="5" fill="#3b82f6" stroke="#fff" stroke-width="2"/>
+                                    <rect x="8" y="142" width="100" height="20" rx="4" fill="#ffffff" fill-opacity="0.85"/>
+                                    <text x="12" y="156" text-anchor="start" class="text-xs md:text-sm font-bold fill-blue-700">1월 초 (4,310)</text>
+                                </g>
+                                <g class="fade-in" style="animation-delay: 1.5s; opacity: 0;">
+                                    <circle cx="250" cy="114" r="5" fill="#4f46e5" stroke="#fff" stroke-width="2"/>
+                                    <rect x="200" y="74" width="100" height="20" rx="4" fill="#ffffff" fill-opacity="0.85"/>
+                                    <text x="250" y="88" text-anchor="middle" class="text-xs md:text-sm font-bold fill-indigo-700">3월 말 (5,640)</text>
+                                </g>
+                                <g class="fade-in" style="animation-delay: 2.0s; opacity: 0;">
+                                    <circle cx="475" cy="21" r="5" fill="#ef4444" stroke="#fff" stroke-width="2"/>
+                                    <rect x="360" y="-8" width="130" height="22" rx="4" fill="#ffffff" fill-opacity="0.85"/>
+                                    <text x="490" y="8" text-anchor="end" class="text-xs md:text-sm font-black fill-red-500">5/14 최고점 (7,981)</text>
+                                </g>
+                                <g class="fade-in" style="animation-delay: 2.5s; opacity: 0;">
+                                    <circle cx="500" cy="52" r="6" fill="#4f46e5" stroke="#fff" stroke-width="2"/>
+                                    <rect x="410" y="24" width="105" height="20" rx="4" fill="#ffffff" fill-opacity="0.85"/>
+                                    <text x="512" y="38" text-anchor="end" class="text-xs md:text-sm font-black fill-indigo-700">현재 (7,208.95)</text>
+                                </g>
+
+                                <text x="0" y="210" text-anchor="middle" class="text-xs font-semibold fill-gray-500">1월</text>
+                                <text x="125" y="210" text-anchor="middle" class="text-xs font-semibold fill-gray-500">2월</text>
+                                <text x="250" y="210" text-anchor="middle" class="text-xs font-semibold fill-gray-500">3월</text>
+                                <text x="375" y="210" text-anchor="middle" class="text-xs font-semibold fill-gray-500">4월</text>
+                                <text x="500" y="210" text-anchor="middle" class="text-xs font-semibold fill-gray-500">5월 현재</text>
+                            </svg>
                         </div>
-                        <div class="border-l border-r border-gray-100">
-                            <p class="text-xs text-gray-500 mb-1">일평균 거래대금</p>
-                            <p class="text-lg font-bold text-gray-800">32.5조<span class="text-xs text-red-500 ml-1">▲</span></p>
-                        </div>
-                        <div>
-                            <p class="text-xs text-gray-500 mb-1">외국인 순매수</p>
-                            <p class="text-lg font-bold text-gray-800">84조<span class="text-xs text-red-500 ml-1">▲</span></p>
+
+                        <div class="mt-8 grid grid-cols-3 gap-4 text-center border-t border-gray-100 pt-4">
+                            <div>
+                                <p class="text-xs text-gray-500 mb-1">시가총액</p>
+                                <p class="text-lg font-bold text-gray-800">5,800조<span class="text-xs text-red-500 ml-1">▲</span></p>
+                            </div>
+                            <div class="border-l border-r border-gray-100">
+                                <p class="text-xs text-gray-500 mb-1">일평균 거래대금</p>
+                                <p class="text-lg font-bold text-gray-800">32.5조<span class="text-xs text-red-500 ml-1">▲</span></p>
+                            </div>
+                            <div>
+                                <p class="text-xs text-gray-500 mb-1">외국인 순매수</p>
+                                <p class="text-lg font-bold text-gray-800">84조<span class="text-xs text-red-500 ml-1">▲</span></p>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </main>
+            </main>
 
-        <footer class="px-16 py-4 flex justify-end items-center text-xs text-gray-400 border-t border-gray-50 relative z-10 fade-in-up delay-500">
-            <div class="flex items-center gap-2">
-                <span>Slide</span>
-                <span class="bg-gray-200 text-gray-700 px-2 py-0.5 rounded">01</span>
-            </div>
-        </footer>
-    </div>
+            <footer class="px-16 py-4 flex justify-end items-center text-xs text-gray-400 border-t border-gray-50 relative z-10 fade-in-up delay-500">
+                <div class="flex items-center gap-2"><span>Slide</span><span class="bg-gray-200 text-gray-700 px-2 py-0.5 rounded">01</span></div>
+            </footer>
 
-    <button id="aiChatBtn" onclick="toggleChat()" class="fixed bottom-8 right-8 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-full p-4 shadow-2xl hover:shadow-lg transform hover:-translate-y-1 transition-all duration-300 z-50 flex items-center gap-2">
-        <span class="text-2xl">🤖</span>
-        <span class="font-bold pr-2 hidden md:block">AI 애널리스트 질문하기</span>
-    </button>
-
-    <div id="aiChatWindow" class="fixed bottom-28 right-8 w-[350px] h-[500px] bg-white rounded-2xl shadow-2xl border border-gray-200 flex flex-col z-50 transform scale-0 origin-bottom-right transition-transform duration-300 opacity-0">
-        <div class="bg-gradient-to-r from-blue-600 to-indigo-600 text-white p-4 rounded-t-2xl flex justify-between items-center shadow-md z-10">
-            <div class="flex items-center gap-2">
-                <span class="text-xl">🤖</span>
-                <h3 class="font-bold">AI 애널리스트</h3>
-            </div>
-            <button onclick="toggleChat()" class="text-white hover:text-gray-200 focus:outline-none">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+            <button onclick="toggleChat('kr')" class="absolute bottom-8 right-8 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-full p-4 shadow-2xl hover:shadow-lg transform hover:-translate-y-1 transition-all duration-300 z-50 flex items-center gap-2">
+                <span class="text-2xl">🤖</span><span class="font-bold pr-2 hidden md:block">AI 애널리스트 질문하기</span>
             </button>
-        </div>
-        
-        <div id="chatBody" class="flex-1 p-4 overflow-y-auto bg-gray-50 flex flex-col gap-3">
-            <div class="bg-white border border-gray-200 text-gray-800 p-3 rounded-xl rounded-tl-none max-w-[85%] self-start text-sm shadow-sm">
-                안녕하세요! 2026년 한국 증시 전망 슬라이드에 대해 궁금한 점이 있으신가요? <strong>밸류업 2.0, AI 반도체 사이클, 유동성 변화</strong> 등에 대해 자유롭게 물어보세요.
+
+            <div id="aiChatWindowKR" class="absolute bottom-28 right-8 w-[350px] h-[500px] bg-white rounded-2xl shadow-2xl border border-gray-200 flex flex-col z-50 transform scale-0 origin-bottom-right transition-transform duration-300 opacity-0 pointer-events-none">
+                <div class="bg-gradient-to-r from-blue-600 to-indigo-600 text-white p-4 rounded-t-2xl flex justify-between items-center shadow-md z-10">
+                    <div class="flex items-center gap-2"><span class="text-xl">🤖</span><h3 class="font-bold">AI 애널리스트 (한국)</h3></div>
+                    <button onclick="toggleChat('kr')" class="text-white hover:text-gray-200 focus:outline-none"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg></button>
+                </div>
+                <div id="chatBodyKR" class="flex-1 p-4 overflow-y-auto bg-gray-50 flex flex-col gap-3">
+                    <div class="bg-white border border-gray-200 text-gray-800 p-3 rounded-xl rounded-tl-none max-w-[85%] self-start text-sm shadow-sm">안녕하세요! 2026년 한국 증시 전망에 대해 질문해 주세요.</div>
+                </div>
+                <div class="p-3 bg-white border-t border-gray-200 rounded-b-2xl flex gap-2">
+                    <input type="text" id="chatInputKR" placeholder="질문을 입력하세요..." class="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 text-sm" onkeypress="if(event.key === 'Enter') sendChatMessage('kr')">
+                    <button onclick="sendChatMessage('kr')" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 text-sm font-bold flex-shrink-0">전송</button>
+                </div>
             </div>
         </div>
 
-        <div class="p-3 bg-white border-t border-gray-200 rounded-b-2xl flex gap-2">
-            <input type="text" id="chatInput" placeholder="질문을 입력하세요..." class="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 text-sm" onkeypress="if(event.key === 'Enter') sendChatMessage()">
-            <button onclick="sendChatMessage()" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors text-sm font-bold flex-shrink-0">
-                전송
+        <div class="slide-page bg-white flex flex-col justify-between">
+            
+            <div class="absolute top-0 right-0 w-[500px] h-[500px] bg-emerald-500 rounded-full mix-blend-multiply filter blur-3xl opacity-10 translate-x-1/2 -translate-y-1/2 z-0"></div>
+            <div class="absolute bottom-0 left-0 w-[400px] h-[400px] bg-teal-500 rounded-full mix-blend-multiply filter blur-3xl opacity-10 -translate-x-1/2 translate-y-1/2 z-0"></div>
+
+            <header class="pt-8 px-16 pb-4 border-b border-gray-100 relative z-10">
+                <div class="flex items-center justify-between">
+                    <button onclick="moveSlide('kr')" class="px-5 py-2.5 bg-gray-100 text-gray-700 rounded-lg text-sm font-bold hover:bg-gray-200 transition-colors shadow-sm border border-gray-200 flex items-center gap-2">
+                        <span>◀</span> 한국 증시 보기 
+                    </button>
+                    <div class="text-right">
+                        <p class="text-emerald-600 font-bold tracking-wider text-sm mb-1">2026 MARKET REVIEW</p>
+                        <h1 class="text-4xl md:text-5xl font-black text-gray-900 tracking-tight">2026년 미국 주식시장 주요 변화</h1>
+                    </div>
+                </div>
+            </header>
+
+            <main class="flex-1 px-16 py-6 flex flex-col md:flex-row gap-12 items-center relative z-10 overflow-hidden">
+                <div class="w-full md:w-5/12 flex flex-col justify-center gap-5">
+                    <div class="bg-emerald-50 rounded-xl p-5 border-l-4 border-emerald-500 shadow-sm">
+                        <h3 class="text-xl font-bold text-gray-800 mb-1 flex items-center gap-2"><span class="text-2xl">🦅</span> 연준(Fed)의 완벽한 연착륙</h3>
+                        <p class="text-gray-600 leading-relaxed text-sm">인플레이션이 2%대 목표치에 안정적으로 도달하며, 고용 시장 붕괴 없는 '노 랜딩'에 가까운 이상적인 금리 인하 사이클이 시장을 뒷받침했습니다.</p>
+                    </div>
+                    <div class="bg-teal-50 rounded-xl p-5 border-l-4 border-teal-500 shadow-sm">
+                        <h3 class="text-xl font-bold text-gray-800 mb-1 flex items-center gap-2"><span class="text-2xl">🚀</span> M7을 넘어선 AI 확산</h3>
+                        <p class="text-gray-600 leading-relaxed text-sm">전력 인프라, 소프트웨어, 헬스케어 등 AI를 실제 비즈니스에 적용하는 기업들로 랠리가 확산되었습니다.</p>
+                    </div>
+                    <div class="bg-cyan-50 rounded-xl p-5 border-l-4 border-cyan-500 shadow-sm">
+                        <h3 class="text-xl font-bold text-gray-800 mb-1 flex items-center gap-2"><span class="text-2xl">🏗️</span> 제조업 르네상스 가속화</h3>
+                        <p class="text-gray-600 leading-relaxed text-sm">글로벌 공급망 재편과 리쇼어링 정책 효과가 본격화되며, 인프라 및 자본재 섹터가 S&P 500 지수의 새로운 동력으로 작용했습니다.</p>
+                    </div>
+                </div>
+
+                <div class="w-full md:w-7/12 flex flex-col items-center justify-center h-full max-h-[85vh]">
+                    <div class="w-full bg-white border border-gray-200 rounded-2xl shadow-md p-6 relative">
+                        <h4 class="text-center font-bold text-gray-700 mb-6">2026년 S&P 500 지수 추이 (실제 YTD 데이터)</h4>
+                        <div class="w-full h-64 md:h-80 relative">
+                            <svg viewBox="0 0 520 220" class="w-full h-full overflow-visible">
+                                <line x1="0" y1="180" x2="500" y2="180" stroke="#e5e7eb" stroke-width="1" />
+                                <line x1="0" y1="140" x2="500" y2="140" stroke="#e5e7eb" stroke-width="1" />
+                                <line x1="0" y1="100" x2="500" y2="100" stroke="#e5e7eb" stroke-width="1" />
+                                <line x1="0" y1="60" x2="500" y2="60" stroke="#e5e7eb" stroke-width="1" />
+                                <line x1="0" y1="20" x2="500" y2="20" stroke="#e5e7eb" stroke-width="1" />
+                                
+                                <text x="-15" y="184" text-anchor="end" class="text-[11px] font-medium fill-gray-400">4,000</text>
+                                <text x="-15" y="144" text-anchor="end" class="text-[11px] font-medium fill-gray-400">5,000</text>
+                                <text x="-15" y="104" text-anchor="end" class="text-[11px] font-medium fill-gray-400">6,000</text>
+                                <text x="-15" y="64" text-anchor="end" class="text-[11px] font-medium fill-gray-400">7,000</text>
+                                <text x="-15" y="24" text-anchor="end" class="text-[11px] font-medium fill-gray-400">8,000</text>
+
+                                <path d="M 0 130 C 100 130, 150 108, 250 108 C 350 108, 400 78, 475 78 C 485 78, 490 86, 500 86" 
+                                      fill="none" stroke="url(#gradient-us)" stroke-width="4" stroke-linecap="round" class="draw-line" />
+                                <defs>
+                                    <linearGradient id="gradient-us" x1="0%" y1="0%" x2="100%" y2="0%">
+                                        <stop offset="0%" stop-color="#10b981" />
+                                        <stop offset="100%" stop-color="#0d9488" />
+                                    </linearGradient>
+                                </defs>
+
+                                <g class="fade-in" style="animation-delay: 1.0s; opacity: 0;">
+                                    <circle cx="0" cy="130" r="5" fill="#10b981" stroke="#fff" stroke-width="2"/>
+                                    <rect x="8" y="104" width="100" height="20" rx="4" fill="#ffffff" fill-opacity="0.85"/>
+                                    <text x="12" y="118" text-anchor="start" class="text-xs md:text-sm font-bold fill-emerald-700">1월 초 (5,250)</text>
+                                </g>
+                                <g class="fade-in" style="animation-delay: 1.5s; opacity: 0;">
+                                    <circle cx="250" cy="108" r="5" fill="#0f766e" stroke="#fff" stroke-width="2"/>
+                                    <rect x="200" y="68" width="100" height="20" rx="4" fill="#ffffff" fill-opacity="0.85"/>
+                                    <text x="250" y="82" text-anchor="middle" class="text-xs md:text-sm font-bold fill-teal-700">3월 말 (5,800)</text>
+                                </g>
+                                <g class="fade-in" style="animation-delay: 2.0s; opacity: 0;">
+                                    <circle cx="475" cy="78" r="5" fill="#ef4444" stroke="#fff" stroke-width="2"/>
+                                    <rect x="340" y="48" width="145" height="22" rx="4" fill="#ffffff" fill-opacity="0.85"/>
+                                    <text x="480" y="63" text-anchor="end" class="text-xs md:text-sm font-black fill-red-500">5/14 최고점 (6,540)</text>
+                                </g>
+                                <g class="fade-in" style="animation-delay: 2.5s; opacity: 0;">
+                                    <circle cx="500" cy="86" r="6" fill="#0d9488" stroke="#fff" stroke-width="2"/>
+                                    <rect x="390" y="98" width="125" height="20" rx="4" fill="#ffffff" fill-opacity="0.85"/>
+                                    <text x="510" y="112" text-anchor="end" class="text-xs md:text-sm font-black fill-teal-700">현재 (6,350.20)</text>
+                                </g>
+
+                                <text x="0" y="210" text-anchor="middle" class="text-xs font-semibold fill-gray-500">1월</text>
+                                <text x="125" y="210" text-anchor="middle" class="text-xs font-semibold fill-gray-500">2월</text>
+                                <text x="250" y="210" text-anchor="middle" class="text-xs font-semibold fill-gray-500">3월</text>
+                                <text x="375" y="210" text-anchor="middle" class="text-xs font-semibold fill-gray-500">4월</text>
+                                <text x="500" y="210" text-anchor="middle" class="text-xs font-semibold fill-gray-500">5월 현재</text>
+                            </svg>
+                        </div>
+
+                        <div class="mt-8 grid grid-cols-3 gap-4 text-center border-t border-gray-100 pt-4">
+                            <div>
+                                <p class="text-xs text-gray-500 mb-1">시가총액</p>
+                                <p class="text-lg font-bold text-gray-800">$ 65 Trillion<span class="text-xs text-red-500 ml-1">▲</span></p>
+                            </div>
+                            <div class="border-l border-r border-gray-100">
+                                <p class="text-xs text-gray-500 mb-1">Tech 섹터 비중</p>
+                                <p class="text-lg font-bold text-gray-800">38.5 %<span class="text-xs text-blue-500 ml-1">▼</span></p>
+                            </div>
+                            <div>
+                                <p class="text-xs text-gray-500 mb-1">VIX (변동성 지수)</p>
+                                <p class="text-lg font-bold text-gray-800">12.4<span class="text-xs text-blue-500 ml-1">▼</span></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+
+            <footer class="px-16 py-4 flex justify-end items-center text-xs text-gray-400 border-t border-gray-50 relative z-10">
+                <div class="flex items-center gap-2"><span>Slide</span><span class="bg-gray-200 text-gray-700 px-2 py-0.5 rounded">02</span></div>
+            </footer>
+
+            <button onclick="toggleChat('us')" class="absolute bottom-8 right-8 bg-gradient-to-r from-emerald-500 to-teal-600 text-white rounded-full p-4 shadow-2xl hover:shadow-lg transform hover:-translate-y-1 transition-all duration-300 z-50 flex items-center gap-2">
+                <span class="text-2xl">🤖</span><span class="font-bold pr-2 hidden md:block">AI 월가 애널리스트 질문하기</span>
             </button>
+
+            <div id="aiChatWindowUS" class="absolute bottom-28 right-8 w-[350px] h-[500px] bg-white rounded-2xl shadow-2xl border border-gray-200 flex flex-col z-50 transform scale-0 origin-bottom-right transition-transform duration-300 opacity-0 pointer-events-none">
+                <div class="bg-gradient-to-r from-emerald-500 to-teal-600 text-white p-4 rounded-t-2xl flex justify-between items-center shadow-md z-10">
+                    <div class="flex items-center gap-2"><span class="text-xl">🤖</span><h3 class="font-bold">월스트리트 AI 애널리스트</h3></div>
+                    <button onclick="toggleChat('us')" class="text-white hover:text-gray-200 focus:outline-none"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg></button>
+                </div>
+                <div id="chatBodyUS" class="flex-1 p-4 overflow-y-auto bg-gray-50 flex flex-col gap-3">
+                    <div class="bg-white border border-gray-200 text-gray-800 p-3 rounded-xl rounded-tl-none max-w-[85%] self-start text-sm shadow-sm">환영합니다! 2026년 미국 증시 전망에 대해 질문해 주세요.</div>
+                </div>
+                <div class="p-3 bg-white border-t border-gray-200 rounded-b-2xl flex gap-2">
+                    <input type="text" id="chatInputUS" placeholder="질문을 입력하세요..." class="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-teal-500 focus:ring-1 focus:ring-teal-500 text-sm" onkeypress="if(event.key === 'Enter') sendChatMessage('us')">
+                    <button onclick="sendChatMessage('us')" class="bg-teal-600 text-white px-4 py-2 rounded-lg hover:bg-teal-700 text-sm font-bold flex-shrink-0">전송</button>
+                </div>
+            </div>
+
         </div>
     </div>
 
     <script>
-        let isChatOpen = false;
-        const chatWindow = document.getElementById('aiChatWindow');
-        const chatBody = document.getElementById('chatBody');
-        const chatInput = document.getElementById('chatInput');
+        // --- 1. 슬라이드 이동 로직 ---
+        function moveSlide(target) {
+            const slider = document.getElementById('main-slider');
+            if (target === 'us') {
+                slider.style.transform = 'translateX(-100vw)';
+                // 화면 넘길 때 챗봇 열려있으면 닫기
+                if(chats.kr.isOpen) toggleChat('kr');
+            } else {
+                slider.style.transform = 'translateX(0)';
+                if(chats.us.isOpen) toggleChat('us');
+            }
+        }
 
-        function toggleChat() {
-            isChatOpen = !isChatOpen;
-            if (isChatOpen) {
-                chatWindow.classList.remove('scale-0', 'opacity-0');
+        // --- 2. 챗봇 공통 로직 ---
+        const apiKey = ""; 
+        const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent?key=${apiKey}`;
+        
+        // 국가별 챗봇 설정 분리
+        const chats = {
+            kr: {
+                isOpen: false,
+                windowId: 'aiChatWindowKR',
+                bodyId: 'chatBodyKR',
+                inputId: 'chatInputKR',
+                history: [],
+                prompt: "당신은 한국 주식 시장 애널리스트입니다. 2026년 한국 증시 밸류업 2.0, AI 슈퍼사이클 관련 질문에 짧게 답변하세요."
+            },
+            us: {
+                isOpen: false,
+                windowId: 'aiChatWindowUS',
+                bodyId: 'chatBodyUS',
+                inputId: 'chatInputUS',
+                history: [],
+                prompt: "당신은 월스트리트 출신 미국 주식 시장 애널리스트입니다. 2026년 미국 증시 연준 연착륙, AI 확산 관련 질문에 짧게 답변하세요."
+            }
+        };
+
+        function toggleChat(country) {
+            const chat = chats[country];
+            const chatWindow = document.getElementById(chat.windowId);
+            const chatInput = document.getElementById(chat.inputId);
+
+            chat.isOpen = !chat.isOpen;
+            if (chat.isOpen) {
+                chatWindow.classList.remove('scale-0', 'opacity-0', 'pointer-events-none');
                 chatWindow.classList.add('scale-100', 'opacity-100');
                 setTimeout(() => chatInput.focus(), 300);
             } else {
                 chatWindow.classList.remove('scale-100', 'opacity-100');
-                chatWindow.classList.add('scale-0', 'opacity-0');
+                chatWindow.classList.add('scale-0', 'opacity-0', 'pointer-events-none');
             }
         }
 
-        const apiKey = ""; 
-        const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent?key=${apiKey}`;
-        
-        let chatHistory = [];
-        const systemPrompt = "당신은 최고의 한국 주식 시장 애널리스트입니다. 사용자는 현재 '2026년 한국 증시 주요 변화(밸류업 2.0, AI/반도체 슈퍼사이클, 금리 인하 및 유동성)'에 대한 프레젠테이션 슬라이드를 보고 있습니다. 슬라이드에 기록된 실제 2026년 코스피 지수 추이(연초 4,310선에서 출발하여 5월 14일 사상 최고치인 7,981.41을 돌파한 후 현재 7,208.95선 부근 조정 국면)와 관련된 사용자의 질문에 전문적이고 명확하며 간결하게(3~4문장 내외) 한국어로 답변해 주세요. 친절한 톤을 유지하세요.";
-
-        async function sendChatMessage() {
+        async function sendChatMessage(country) {
+            const chat = chats[country];
+            const chatInput = document.getElementById(chat.inputId);
             const message = chatInput.value.trim();
             if (!message) return;
 
-            appendMessage(message, 'user');
+            appendMessage(country, message, 'user');
             chatInput.value = '';
             
             const loadingId = 'loading-' + Date.now();
-            appendMessage('데이터를 분석하고 있습니다...', 'loading', loadingId);
+            appendMessage(country, '데이터를 분석하고 있습니다...', 'loading', loadingId);
 
-            chatHistory.push({ role: "user", parts: [{ text: message }] });
+            chat.history.push({ role: "user", parts: [{ text: message }] });
             
             const payload = {
-                contents: chatHistory,
-                systemInstruction: { parts: [{ text: systemPrompt }] }
+                contents: chat.history,
+                systemInstruction: { parts: [{ text: chat.prompt }] }
             };
 
             try {
@@ -274,51 +412,46 @@
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(payload)
                 });
-                
                 const result = await response.json();
                 document.getElementById(loadingId)?.remove();
 
                 if (result.candidates && result.candidates[0].content) {
                     const replyText = result.candidates[0].content.parts[0].text;
-                    appendMessage(replyText, 'model');
-                    chatHistory.push({ role: "model", parts: [{ text: replyText }] });
+                    appendMessage(country, replyText, 'model');
+                    chat.history.push({ role: "model", parts: [{ text: replyText }] });
                 } else {
-                    appendMessage('죄송합니다. 응답을 생성하는 데 문제가 발생했습니다.', 'error');
+                    appendMessage(country, '죄송합니다. 오류가 발생했습니다.', 'error');
                 }
             } catch (error) {
-                console.error("Gemini API Error:", error);
                 document.getElementById(loadingId)?.remove();
-                appendMessage('네트워크 오류가 발생했습니다. 잠시 후 다시 시도해주세요.', 'error');
+                appendMessage(country, '네트워크 오류가 발생했습니다.', 'error');
             }
         }
 
-        function appendMessage(text, sender, id = null) {
+        function appendMessage(country, text, sender, id = null) {
+            const chatBody = document.getElementById(chats[country].bodyId);
             const msgDiv = document.createElement('div');
+            
+            // 테마에 맞는 색상 적용 (한국: 파랑, 미국: 청록)
+            const isKR = country === 'kr';
+            let userClass = isKR ? 'bg-blue-600 text-white' : 'bg-teal-600 text-white';
+            let highlightClass = isKR ? 'text-blue-700' : 'text-teal-700';
+
             msgDiv.className = `p-3 text-sm shadow-sm max-w-[85%] leading-relaxed ${
-                sender === 'user' 
-                    ? 'bg-blue-600 text-white self-end rounded-2xl rounded-tr-sm' 
-                    : sender === 'error'
-                    ? 'bg-red-50 text-red-600 border border-red-200 self-start rounded-2xl rounded-tl-sm'
-                    : sender === 'loading'
-                    ? 'bg-gray-100 text-gray-500 self-start rounded-2xl rounded-tl-sm animate-pulse'
-                    : 'bg-white border border-gray-200 text-gray-800 self-start rounded-2xl rounded-tl-sm'
+                sender === 'user' ? `${userClass} self-end rounded-2xl rounded-tr-sm` : 
+                sender === 'error' ? 'bg-red-50 text-red-600 border border-red-200 self-start rounded-2xl rounded-tl-sm' : 
+                sender === 'loading' ? 'bg-gray-100 text-gray-500 self-start rounded-2xl rounded-tl-sm animate-pulse' : 
+                'bg-white border border-gray-200 text-gray-800 self-start rounded-2xl rounded-tl-sm'
             }`;
             if (id) msgDiv.id = id;
             
-            let formattedText = text
-                .replace(/&/g, "&amp;")
-                .replace(/</g, "&lt;")
-                .replace(/>/g, "&gt;")
-                .replace(/"/g, "&quot;")
-                .replace(/'/g, "&#039;");
-            
+            let formattedText = text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
             formattedText = formattedText
-                .replace(/\*\*(.*?)\*\*/g, '<strong class="text-blue-700">$1</strong>')
+                .replace(/\*\*(.*?)\*\*/g, `<strong class="${highlightClass}">$1</strong>`)
                 .replace(/\*(.*?)\*/g, '<em>$1</em>')
                 .replace(/\n/g, '<br>');
 
             msgDiv.innerHTML = formattedText;
-            
             chatBody.appendChild(msgDiv);
             chatBody.scrollTop = chatBody.scrollHeight;
         }
